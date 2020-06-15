@@ -1,0 +1,16 @@
+@import "./_define";
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+:root {
+  --content-max-width: #{$content-max-width};
+
+  --color-black: #{$color-black};
+  --color-white: #{$color-white};
+}
+
+* {
+  box-sizing: border-box;
+  word-wrap: break-word;
+}

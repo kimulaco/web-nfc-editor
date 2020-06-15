@@ -1,0 +1,17 @@
+.root {
+  color: var(--color-white);
+  background: var(--color-black);
+}
+
+.inner {
+  @apply w-full flex justify-between items-center;
+
+  max-width: var(--content-max-width);
+  height: 50px;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+
+.title {
+  font-size: 20px;
+}
