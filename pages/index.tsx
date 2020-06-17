@@ -6,14 +6,14 @@ import { readNFC, writeNFC } from '../utils/nfc'
 
 const IndexPage: React.FC = () => {
   const [NDEFData, setNDEFData] = useState<NDEFReadingEvent | null>(null)
-  const [newRecords, setNewRecords] = useState<NDEFRecord[]>([])
-  const records = NDEFData?.message?.records || []
+  const [records, setRecords] = useState<NDEFRecord[]>([])
+  // const records = NDEFData?.message?.records || []
   let isWriting = false
 
   const updateNewRecords = (index: number, record: NDEFRecord) => {
     const records: NDEFRecord[] = [...newRecords]
     records[index] = record
-    setNewRecords(records)
+    setRecords(records)
   }
 
   const handleClickReadNFC = async () => {
@@ -25,9 +25,9 @@ const IndexPage: React.FC = () => {
       const content = await readNFC()
       console.log(content)
       setNDEFData(content)
-      console.log('setNewRecords')
+      console.log('setRecords')
       console.log(content?.message?.records || [])
-      setNewRecords(content?.message?.records || [])
+      setRecords(content?.message?.records || [])
     } catch (error) {
       console.error(error)
       alert('NFCカードの読み込みに失敗しました。')
@@ -37,11 +37,11 @@ const IndexPage: React.FC = () => {
   const handleClickWriteNFC = async () => {
     isWriting = true
     try {
-      await writeNFC(newRecords)
+      await writeNFC(records)
       isWriting = false
       alert('NFCカードへの書き込みに成功しました。')
     } catch (error) {
-      console.error(newRecords)
+      console.error(records)
       console.error(error)
       isWriting = false
       alert('NFCカードへの書き込みに失敗しました。')
@@ -50,6 +50,17 @@ const IndexPage: React.FC = () => {
 
   const handleClickClear = () => {
     setNDEFData(null)
+  }
+
+  const handleClickAddRecode = () => {
+    const encoder = new TextEncoder()
+    const newRecords = [...records]
+    newRecords.push({
+      mediaType: 'application/json',
+      recordType: 'mime',
+      data: encoder.encode('{}'),
+    })
+    setRecords(newRecords)
   }
 
   const NFCInfo = () => {
@@ -96,6 +107,10 @@ const IndexPage: React.FC = () => {
             />
           )
         })}
+      </div>
+
+      <div>
+        <StdButton onClick={handleClickAddRecode}>Add Recode</StdButton>
       </div>
     </AppLayout>
   )
