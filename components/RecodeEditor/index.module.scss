@@ -1,0 +1,20 @@
+.root {
+  @apply mb-lg p-sm border shadow-lg relative;
+}
+
+.index {
+  @apply inline-block p-xs mr-sm;
+
+  color: var(--color-white);
+  background: var(--color-black);
+  line-height: 1;
+}
+
+.textarea {
+  @apply p-sm border rounded;
+
+  width: 100%;
+  max-width: 100%;
+  min-width: 100%;
+  resize: none;
+}
