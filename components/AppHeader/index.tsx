@@ -1,6 +1,4 @@
 import React from 'react'
-import Link from 'next/link'
-import Head from 'next/head'
 import styles from './index.module.scss'
 
 const AppHeader: React.FC = () => {

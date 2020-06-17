@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { decodeRecode } from '../../utils/nfc'
 import StdButton from '../../components/StdButton/'
 import styles from './index.module.scss'
+import { NDEFRecord } from '../../interfaces/nfc'
 
 type Props = {
   record: NDEFRecord

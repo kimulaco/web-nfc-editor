@@ -11,7 +11,7 @@ if (process.env.NODE_ENV === 'production') {
       './components/*.tsx',
       './components/**/*.tsx',
     ],
-    whitelist: ['html', 'body'],
+    whitelist: ['html', 'body']
   }])
 }
 

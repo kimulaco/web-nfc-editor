@@ -1,11 +1,20 @@
-export const readNFC = (): Promise<TODO<any>[]> => {
+declare global {
+  interface Window {
+    NDEFReader: any
+    NDEFWriter: any
+  }
+}
+
+import { NDEFRecord, NDEFReadingEvent } from '../interfaces/nfc'
+
+export const readNFC = (): Promise<NDEFReadingEvent> => {
   return new Promise((resolve, reject) => {
-    const reader = new NDEFReader()
+    const reader = new window.NDEFReader()
 
     const handleError = (event: any) => {
       reader.removeEventListener('error', handleError)
       reader.removeEventListener('reading', handleReading)
-      reject(error)
+      reject(event)
     }
 
     const handleReading = (content: any) => {
@@ -32,7 +41,7 @@ export const readNFC = (): Promise<TODO<any>[]> => {
 export const writeNFC = (records: NDEFRecord[]) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const writer = new NDEFWriter()
+      const writer = new window.NDEFWriter()
       await writer.write({ records })
       resolve()
     } catch (error) {

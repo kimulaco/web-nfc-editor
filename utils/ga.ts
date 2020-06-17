@@ -1,3 +1,9 @@
+declare global {
+  interface Window {
+    gtag: any
+  }
+}
+
 export const GA_TRACKING_ID = 'UA-169425309-1'
 
 export const sendPageview = (url: string) => {

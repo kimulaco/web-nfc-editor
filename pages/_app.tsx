@@ -3,7 +3,7 @@ import Router from 'next/router'
 import { sendPageview } from '../utils/ga'
 import '../assets/scss/main.scss'
 
-export default ({ Component, pageProps }) => {
+export default ({ Component, pageProps }: any) => {
   useEffect(() => {
     const handleRouteChange = (url: string) => {
       sendPageview(url)

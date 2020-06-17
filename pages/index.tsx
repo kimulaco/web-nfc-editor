@@ -1,8 +1,9 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState } from 'react'
 import AppLayout from '../components/AppLayout/'
 import StdButton from '../components/StdButton/'
 import RecodeEditor from '../components/RecodeEditor/'
 import { readNFC, writeNFC } from '../utils/nfc'
+import { NDEFRecord, NDEFReadingEvent } from '../interfaces/nfc'
 
 const IndexPage: React.FC = () => {
   const [NDEFData, setNDEFData] = useState<NDEFReadingEvent | null>(null)
@@ -11,9 +12,9 @@ const IndexPage: React.FC = () => {
   let isWriting = false
 
   const updateNewRecords = (index: number, record: NDEFRecord) => {
-    const records: NDEFRecord[] = [...newRecords]
-    records[index] = record
-    setRecords(records)
+    const newRecords: NDEFRecord[] = [...records]
+    newRecords[index] = record
+    setRecords(newRecords)
   }
 
   const handleClickReadNFC = async () => {
@@ -22,7 +23,7 @@ const IndexPage: React.FC = () => {
     }
 
     try {
-      const content = await readNFC()
+      const content: NDEFReadingEvent = await readNFC()
       setNDEFData(content)
       setRecords(content?.message?.records || [])
       setIsReadNFC(true)
