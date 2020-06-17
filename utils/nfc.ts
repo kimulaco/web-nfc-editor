@@ -41,6 +41,19 @@ export const writeNFC = (records: NDEFRecord[]) => {
   })
 }
 
+export const getRecordType = (record: NDEFRecord): string => {
+  if (
+    record.recordType === 'mime' &&
+    record.mediaType === 'application/json'
+  ) {
+    return 'json'
+  } else if (record.recordType === 'text') {
+    return 'text'
+  } else {
+    return ''
+  }
+}
+
 export const decodeRecodeOfText = (recode: NDEFRecord): string => {
   const textDecoder = new TextDecoder(recode.encoding)
   return textDecoder.decode(recode.data)
@@ -58,4 +71,15 @@ export const decodeRecodeOfImage = (recode: NDEFRecord): string => {
     type: recode.mediaType
   })
   return URL.createObjectURL(blob)
+}
+
+export const decodeRecode = (record: NDEFRecord): string => {
+  const recordType = getRecordType(record)
+  if (recordType === 'json') {
+    return JSON.stringify(decodeRecodeOfJSON(record))
+  } else if (recordType === 'text') {
+    return decodeRecodeOfText(record)
+  } else {
+    return ''
+  }
 }

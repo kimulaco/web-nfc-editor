@@ -7,7 +7,7 @@ import { readNFC, writeNFC } from '../utils/nfc'
 const IndexPage: React.FC = () => {
   const [NDEFData, setNDEFData] = useState<NDEFReadingEvent | null>(null)
   const [records, setRecords] = useState<NDEFRecord[]>([])
-  // const records = NDEFData?.message?.records || []
+  const [isReadNFC, setIsReadNFC] = useState<boolean>(false)
   let isWriting = false
 
   const updateNewRecords = (index: number, record: NDEFRecord) => {
@@ -23,11 +23,9 @@ const IndexPage: React.FC = () => {
 
     try {
       const content = await readNFC()
-      console.log(content)
       setNDEFData(content)
-      console.log('setRecords')
-      console.log(content?.message?.records || [])
       setRecords(content?.message?.records || [])
+      setIsReadNFC(true)
     } catch (error) {
       console.error(error)
       alert('NFCカードの読み込みに失敗しました。')
@@ -50,6 +48,8 @@ const IndexPage: React.FC = () => {
 
   const handleClickClear = () => {
     setNDEFData(null)
+    setRecords([])
+    setIsReadNFC(false)
   }
 
   const handleClickAddRecode = () => {
@@ -101,7 +101,6 @@ const IndexPage: React.FC = () => {
               record={record}
               index={index + 1}
               onChange={(record: NDEFRecord) => {
-                console.log(record)
                 updateNewRecords(index, record)
               }}
             />
@@ -109,9 +108,11 @@ const IndexPage: React.FC = () => {
         })}
       </div>
 
-      <div>
-        <StdButton onClick={handleClickAddRecode}>Add Recode</StdButton>
-      </div>
+      {!isReadNFC ? null : (
+        <div>
+          <StdButton onClick={handleClickAddRecode}>Add Recode</StdButton>
+        </div>
+      )}
     </AppLayout>
   )
 }

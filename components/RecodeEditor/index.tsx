@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { decodeRecodeOfJSON } from '../../utils/nfc'
+import { decodeRecode } from '../../utils/nfc'
 import StdButton from '../../components/StdButton/'
 import styles from './index.module.scss'
 
@@ -14,9 +14,7 @@ const RecodeEditor: React.FC<Props> = ({
   index,
   onChange,
 }: Props) => {
-  const [recodeValue] = useState<string>(
-    JSON.stringify(decodeRecodeOfJSON(record))
-  )
+  const [recodeValue] = useState<string>(decodeRecode(record))
   const [value, setValue] = useState<string>(recodeValue)
   const textareaLineLength = (value.match(/\r\n|\r|\n/g) || []).length + 1
   const textareaHeight = (24 * textareaLineLength) + 32
