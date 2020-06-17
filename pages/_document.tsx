@@ -1,12 +1,17 @@
 import Document, { Head, Main, NextScript } from 'next/document'
-
 import { GA_TRACKING_ID } from '../utils/ga'
+
+const { WEB_NFC_TRIAL_TOKEN } = process.env
 
 export default class MyDocument extends Document {
   render() {
     return (
       <html>
         <Head>
+          <meta
+            http-equiv="origin-trial"
+            content={WEB_NFC_TRIAL_TOKEN}
+          />
           <script
             async
             src={
